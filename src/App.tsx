@@ -14,12 +14,14 @@ function App() {
     <div className="App">
       <Layout>
         <Layout>
-          <Header>
-            <Logo />
-            <div className="header__bg"></div>
-          </Header>
-          <Layout>
-            <Router>
+          <Router>
+            <Header>
+              <Link to="/" className='logo'>
+                <Logo />
+              </Link>
+              <div className="header__bg"></div>
+            </Header>
+            <Layout>
               <Sider>
                 <ul className="sidebar__list">
                   <li className="sidebar__list-item">
@@ -39,8 +41,8 @@ function App() {
                 <Route exact path="/order" component={Order} />
                 <Route exact path="/dashboard" component={Dashboard} />
               </Switch>
-            </Router>
-          </Layout>
+            </Layout>
+          </Router>
         </Layout>
       </Layout>
     </div>
