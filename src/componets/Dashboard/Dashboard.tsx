@@ -1,15 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Charts from "../Chart/Chart";
-import Chart from "../Chart/Chart";
 import MealsChart from "../Chart/MealsChart";
 import { orderSelector } from "../Store/selectors/orderSelector";
 import { AppStateType } from "../Store/store";
 
 const Dashboard = () => {
   const data = useSelector((state: AppStateType) => orderSelector(state));
-
-  
 
   const unpaid = data.filter(({ invoice }) => !invoice);
 
@@ -20,8 +17,7 @@ const Dashboard = () => {
       <div className="dash__top">
         <div className="meals">
           <h2>Meals</h2>
-          {/* <div className="group__meals__wrapp">{groupMeals}</div> */}
-          <MealsChart/>
+          <MealsChart />
         </div>
         <div className="invoice">
           <h2>Invoice Unpaid</h2>
@@ -30,7 +26,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="totalOrderDate">
-          <h2> Tolal Order Date</h2>
+          <h2> Tolal Order on Date</h2>
           <ul className="order__list">
             <li className="order__item">{totalOrderDate?.date}</li>
             <li className="order__item">{totalOrderDate?.firstNameLastName}</li>
@@ -41,7 +37,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="dash__bottom">
-       <Charts/>
+        <Charts />
       </div>
     </section>
   );
