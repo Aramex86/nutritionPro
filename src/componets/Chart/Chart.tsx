@@ -8,14 +8,11 @@ const Charts = () => {
   const storeData = useSelector((state: AppStateType) => orderSelector(state));
   const [charData, setCharData] = useState({});
 
+  const arrDates = [] as Array<string>;
+  const arrOrders = [] as Array<number>;
 
-
-  const arrDates=[] as Array<string>
-  const arrOrders=[] as Array<number>
-
-  storeData.map(({date})=> arrDates.push(date.slice(2)));
-  storeData.map(({meals})=> arrOrders.push(meals));
-
+  storeData.map(({ date }) => arrDates.push(date.slice(2)));
+  storeData.map(({ meals }) => arrOrders.push(meals));
 
   const chart = () => {
     setCharData({
@@ -23,7 +20,7 @@ const Charts = () => {
       datasets: [
         {
           label: "Qty of Oeders",
-          data:arrOrders,
+          data: arrOrders,
           backgroundColor: ["rgba(81,211,149,.7)"],
         },
       ],
@@ -34,9 +31,9 @@ const Charts = () => {
   }, []);
 
   return (
-    <div className='line__chartwrapp'>
+    <div className="line__chartwrapp">
       <h2>Orders on Date's</h2>
-      <Line data={charData} options={{responsive:true}}/>
+      <Line data={charData} options={{ responsive: true }} />
     </div>
   );
 };

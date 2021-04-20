@@ -7,6 +7,7 @@ const FILTER_DATA_DATE = "FILTER_DATA_DATE";
 const FILTER_DATA_START_DATE = "FILTER_DATA_START_DATE";
 const FILTER_DATA_MEALS = "FILTER_DATA_MEALS";
 const FILTER_DATA_INVOICE = "FILTER_DATA_INVOICE";
+const SHOW_SIDE_BAR = "SHOW_SIDE_BAR";
 
 const initialState = {
   data: [
@@ -512,11 +513,17 @@ const initialState = {
     },
   ] as Array<DataType>,
   filterData: [] as Array<DataType>,
+  showSideBar: false,
 };
 
 type initialStateType = typeof initialState;
 
-type ActionsTypes = FilterDateType|FilterStartDateType|FilterMeals|FilterInvoice;
+type ActionsTypes =
+  | FilterDateType
+  | FilterStartDateType
+  | FilterMeals
+  | FilterInvoice
+  | ShowSideBarType;
 
 // type DispatchType = Dispatch<ActionsTypes>;
 // type ThunkType = ThunkAction<
@@ -534,34 +541,54 @@ const orderReducer = (
     case FILTER_DATA_DATE: {
       return {
         ...state,
-        filterData: state.data.filter(
-          (item) => item["date"] === action.value
-        ),
+        filterData: state.data.filter((item) => {
+          const date = new Date(item["date"]);
+          const dateFormat = new Intl.DateTimeFormat("en-GB").format(date);
+
+          if (dateFormat === action.value) return item;
+        }),
       };
     }
     case FILTER_DATA_START_DATE: {
       return {
         ...state,
-        filterData:state.data.filter(item=> item['startDate'] === action.value)
+        filterData: state.data.filter((item) => {
+          const date = new Date(item["startDate"]);
+          const dateFormat = new Intl.DateTimeFormat("en-GB").format(date);
+
+          if (dateFormat === action.value) return item;
+        }),
       };
     }
-    case FILTER_DATA_MEALS:{
-      return{
+    case FILTER_DATA_MEALS: {
+      return {
         ...state,
-        filterData:state.data.filter(item=> item['meals'] === action.value)
-      }
+        filterData: state.data.filter((item) => item["meals"] === action.value),
+      };
     }
-    case FILTER_DATA_INVOICE:{
-      return{
+    case FILTER_DATA_INVOICE: {
+      return {
         ...state,
-        filterData:state.data.filter(item => {
-          if(action.value.toLowerCase() === 'paid' && item['invoice']===true){
-            return item
-          }else if(action.value.toLowerCase() ==='unpaid' && item['invoice']===false){
-            return item
+        filterData: state.data.filter((item) => {
+          if (
+            action.value.toLowerCase() === "paid" &&
+            item["invoice"] === true
+          ) {
+            return item;
+          } else if (
+            action.value.toLowerCase() === "unpaid" &&
+            item["invoice"] === false
+          ) {
+            return item;
           }
-        })
-      }
+        }),
+      };
+    }
+    case SHOW_SIDE_BAR: {
+      return {
+        ...state,
+        showSideBar: !state.showSideBar,
+      };
     }
     default:
       return state;
@@ -570,40 +597,45 @@ const orderReducer = (
 
 type FilterDateType = {
   type: typeof FILTER_DATA_DATE;
-  value:string
+  value: string;
 };
 
-export const filterDate = (value:string): FilterDateType => {
-  return { type: FILTER_DATA_DATE,value };
+export const filterDate = (value: string): FilterDateType => {
+  return { type: FILTER_DATA_DATE, value };
 };
 
 type FilterStartDateType = {
   type: typeof FILTER_DATA_START_DATE;
-  value:string
+  value: string;
 };
 
-export const filterStartDate = (value:string): FilterStartDateType => {
-  return { type: FILTER_DATA_START_DATE ,value};
+export const filterStartDate = (value: string): FilterStartDateType => {
+  return { type: FILTER_DATA_START_DATE, value };
 };
 
-type FilterMeals={
-  type:typeof FILTER_DATA_MEALS
-  value:number
-}
+type FilterMeals = {
+  type: typeof FILTER_DATA_MEALS;
+  value: number;
+};
 
-export const filterMeals=(value:number):FilterMeals=>{
-  return{type:FILTER_DATA_MEALS,value}
-}
-type FilterInvoice={
-  type:typeof FILTER_DATA_INVOICE
-  value:string
-}
+export const filterMeals = (value: number): FilterMeals => {
+  return { type: FILTER_DATA_MEALS, value };
+};
+type FilterInvoice = {
+  type: typeof FILTER_DATA_INVOICE;
+  value: string;
+};
 
-export const filterInvoice=(value:string):FilterInvoice=>{
-  return{type:FILTER_DATA_INVOICE,value}
-}
+export const filterInvoice = (value: string): FilterInvoice => {
+  return { type: FILTER_DATA_INVOICE, value };
+};
 
+type ShowSideBarType = {
+  type: typeof SHOW_SIDE_BAR;
+};
 
-
+export const showSideBar = (): ShowSideBarType => {
+  return { type: SHOW_SIDE_BAR };
+};
 
 export default orderReducer;

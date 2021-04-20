@@ -7,12 +7,25 @@
   padding: 0;
 }
 
+/* HEADER */
+
+.btn-mobile {
+  cursor: pointer;
+  display: none;
+}
+@media screen and (max-width: 900px) {
+  .btn-mobile {
+    display: block;
+  }
+}
+
 /* ORDER */
 .ant-layout-header {
   min-height: 100px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   background: #fff;
+  align-items: center;
 }
 
 .logo {
@@ -23,6 +36,16 @@
 .ant-layout-sider {
   height: 100vh;
   background: #f8f8f8;
+}
+@media screen and (max-width: 900px) {
+  .ant-layout-sider {
+    display: none;
+  }
+}
+
+.show-sidebar {
+  display: flex;
+  justify-content: center;
 }
 
 .sidebar__list {
@@ -56,6 +79,7 @@
   color: #fff;
   border: 1px solid #51d395;
   border-radius: 30px;
+  width: 100%;
 }
 .order-btn:hover {
   color: #51d395;
@@ -66,24 +90,20 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-
-.column__heading input {
-  padding: 0 10px;
-  border: 1px solid #51d395;
-  outline: none;
-  width: 150px;
-}
-
-.column__heading input::placeholder {
-  color: rgba(184, 184, 184, 0.686);
+  width: 140px;
 }
 
 .wellcome {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  text-align: center;
+  line-height: 20;
   font-size: 30px;
+  height: 100vh;
+}
+
+@media screen and (max-width: 900px) {
+  .wellcome {
+    line-height: 10;
+  }
 }
 
 /* DASHBOARD */
@@ -95,6 +115,12 @@
 .dash__wrapp .dash__top {
   display: flex;
   justify-content: space-around;
+}
+@media screen and (max-width: 900px) {
+  .dash__top {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }
 
 .dash__wrapp h2 {
@@ -193,10 +219,37 @@
   margin: auto;
   text-align: center;
 }
+@media screen and (max-width: 900px) {
+  .line__chartwrapp {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .line__chartwrapp {
+    width: 400px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .line__chartwrapp {
+    width: 300px;
+  }
+}
 
 .line__chartwrapp h3 {
   color: #51d395;
 }
 .dash__bottom {
   margin-top: 50px;
+}
+
+.ant-picker {
+  border: 1px solid #51d395;
+}
+.ant-input {
+  border: 1px solid #51d395;
+}
+.ant-btn-primary:focus {
+  background: transparent;
+  border-color: #51d395;
+  color: #51d395;
 }

@@ -1,5 +1,5 @@
-import React  from "react";
-import { Button, Table } from "antd";
+import React from "react";
+import { Button, Table,Input } from "antd";
 import { AppStateType } from "../Store/store";
 import { filteSelector, orderSelector } from "../Store/selectors/orderSelector";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import {
   filterMeals,
   filterStartDate,
 } from "../Store/redusers/orederReducer";
+import { DatePicker } from "antd";
 
 const { Column } = Table;
 
@@ -19,13 +20,14 @@ const Order = () => {
   );
   const dispatch = useDispatch();
 
-  const handleDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    dispatch(filterDate(value));
+  const handleDate = (date: any, dateString: string) => {
+    const newDate = new Intl.DateTimeFormat("en-GB").format(date);
+
+    dispatch(filterDate(newDate));
   };
-  const handleStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    dispatch(filterStartDate(value));
+  const handleStartDate = (date: any, dateString: string) => {
+    const newDate = new Intl.DateTimeFormat("en-GB").format(date);
+    dispatch(filterStartDate(newDate));
   };
   const handleMeals = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -37,7 +39,6 @@ const Order = () => {
     dispatch(filterInvoice(value));
   };
 
-
   return (
     <section className="order__wrapeer">
       <Table
@@ -47,18 +48,18 @@ const Order = () => {
           pageSizeOptions: ["10", "25", "50"],
           showSizeChanger: true,
         }}
+        scroll={{ x: true }}
       >
         <Column
           title={
             <div className="column__heading">
               <span>Date</span>
-              <div>
-                <input type="text" placeholder="Search"  onChange={handleDate} />
-              </div>
+              <DatePicker onChange={handleDate} size={'small'}/>
             </div>
           }
           dataIndex="date"
           key="Date"
+          fixed={"left"}
         />
         <input type="text" />
         <Column
@@ -78,6 +79,7 @@ const Order = () => {
           }
           dataIndex="phone"
           key="Phone"
+          responsive={["md"]}
         />
         <Column
           title={
@@ -87,17 +89,14 @@ const Order = () => {
           }
           dataIndex="email"
           key="Email"
+          responsive={['md']}
         />
         <Column
           title={
             <div className="column__heading">
               <span>Start date</span>
               <div>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  onChange={handleStartDate}
-                />
+                <DatePicker onChange={handleStartDate} size={'small'}/>
               </div>
             </div>
           }
@@ -109,33 +108,27 @@ const Order = () => {
             <div className="column__heading">
               <span>Meals</span>
               <div>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  onChange={handleMeals}
-                />
+                <Input placeholder='search' onChange={handleMeals} size={'small'}/>
               </div>
             </div>
           }
           dataIndex="meals"
           key="Meals"
+          width={'5%'}
         />
         <Column
           title={
             <div className="column__heading">
               <span>Invoice Status</span>
               <div>
-                <input
-                  type="text"
-                  placeholder="Search"
-                  onChange={handleInvoice}
-                />
+                 <Input placeholder='search' onChange={handleInvoice} size={'small'}/>
               </div>
             </div>
           }
           dataIndex="invoice"
           key="id"
           render={(Invoice) => <>{Invoice ? "paid" : "unpaid"}</>}
+          width={'20%'}
         />
         <Column
           key="name"
@@ -146,6 +139,7 @@ const Order = () => {
               </Button>
             </>
           )}
+          width={"5%"}
         />
       </Table>
     </section>
